@@ -3,10 +3,18 @@
  */
 let socket = undefined
 
+let Mock = require('mockjs')
+
 const connect = () => {
     if (socket) return socket
 
-    socket = io.connect('http://127.0.0.1:5000')
+    socket = io.connect('http://192.168.31.106:5000')
+
+    const userName = Mock.Random.name()
+
+    socket.emit('user connected', {
+        name: userName
+    })
 
     return socket
 }

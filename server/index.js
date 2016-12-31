@@ -9,6 +9,8 @@ var express = require('express'),
     webpackHotMiddleware = require('webpack-hot-middleware'),
     webpackDevConfig = require('../webpack.config.js')
 
+var uuid = require('uuid')
+
 var app = express()
 
 var server = require('http').Server(app)
@@ -44,15 +46,35 @@ app.get('*', function (req, res) {
 
 
 io.on('connection', function (socket) {
-    socket.emit('news', {msg: 'Hello world'})
-    socket.on('new online', function (data) {
-        socket.emit('welcome info', {msg: 'Welcome you, Dear ' + data.name})
-        socket.broadcast.emit('welcome info', {msg: 'Welcome new guy, Dear ' + data.name})
+
+
+    socket.on('user connected', function (data) {
+        socket.name = data.name
+        socket.emit('system message', {
+            uuid: uuid.v4(),
+            msg: 'Welcome, Dear ' + socket.name,
+            dateTime: new Date().toDateString()
+        })
+        socket.broadcast.emit('system message', {
+            uuid: uuid.v4(),
+            msg: socket.name + ' in...',
+            dateTime: new Date().toDateString()
+        })
     })
 
-    socket.on('send message', function (msg, cb) {
-        cb && setTimeout(() => cb(), 1500)
-        socket.broadcast.emit('receive message', msg)
+    socket.on('new message', function (msg, cb) {
+        cb && cb()
+        msg.from = 'others'
+        msg.sender = socket.name
+        socket.broadcast.emit('new message', msg)
+    })
+
+    socket.on('disconnected', function () {
+        socket.broadcast.emit('system message', {
+            uuid: uuid.v4(),
+            msg: socket.name + ' out..',
+            dateTime: new Date().toDateString()
+        })
     })
 
 })

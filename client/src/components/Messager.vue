@@ -5,6 +5,15 @@
 </template>
 <style scoped>
     .messager {
+        margin-top: 50px;
+        padding: 5px 5px 15px 5px;
+        display: flex;
+        flex-direction: column;
+        align-content: stretch;
+        justify-content: flex-start;
+        overflow: scroll;
+        height: 100%;
+        background-color: #f8f8f8;
     }
 </style>
 <script>
