@@ -4,6 +4,10 @@
 var path = require('path')
 var OpenBrowserPlugin = require('open-browser-webpack-plugin')
 var webpack = require('webpack')
+var local_ip = require('my-local-ip')()
+var public_ip = '47.90.20.155'
+
+var config = require('./config')
 
 
 module.exports = {
@@ -31,6 +35,11 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env': config.dev.env,
+            'SERVER_IP': config.dev.env === 'product' ? `"${public_ip}"` : `"${local_ip}"`,
+            'PORT': config.dev.port
+        }),
         // new HtmlwebpackPlugin({
         //     title: 'Webpack-demos',
         //     filename: 'index.html'

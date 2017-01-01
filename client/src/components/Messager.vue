@@ -11,7 +11,7 @@
         flex-direction: column;
         align-content: stretch;
         justify-content: flex-start;
-        overflow: scroll;
+        overflow-y: auto;
         height: 100%;
         background-color: #f8f8f8;
     }

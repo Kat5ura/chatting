@@ -8,7 +8,7 @@ let Mock = require('mockjs')
 const connect = () => {
     if (socket) return socket
 
-    socket = io.connect('http://192.168.31.106:5000')
+    socket = io.connect(SERVER_IP + ':' + PORT)
 
     const userName = Mock.Random.name()
 
