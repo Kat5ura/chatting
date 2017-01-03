@@ -40,6 +40,9 @@ module.exports = {
             'SERVER_IP': config.dev.env === 'product' ? `"${public_ip}"` : `"${local_ip}"`,
             'PORT': config.dev.port
         }),
+        new webpack.ProvidePlugin({
+            io: 'socket.io-client/dist/socket.io'
+        }),
         // new HtmlwebpackPlugin({
         //     title: 'Webpack-demos',
         //     filename: 'index.html'

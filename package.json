@@ -29,7 +29,6 @@
     "css-loader": "^0.26.1",
     "my-local-ip": "^1.0.0",
     "open-browser-webpack-plugin": "0.0.3",
-    "public-ip": "^2.0.1",
     "style-loader": "^0.13.1",
     "vue-loader": "^10.0.2",
     "vue-template-compiler": "^2.1.7",
