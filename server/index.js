@@ -44,12 +44,18 @@ app.get('*', function (req, res) {
     res.sendFile(path.resolve('client/index.html'))
 })
 
+global.ONLINE_USERS = {}
 
 io.on('connection', function (socket) {
 
+    ONLINE_USERS[socket.id] = {}
 
     socket.on('user connected', function (data) {
         socket.name = data.name
+        ONLINE_USERS[socket.id].name = data.name
+
+        socket.broadcast.emit('online users', ONLINE_USERS)
+
         socket.emit('system message', {
             uuid: uuid.v4(),
             msg: 'Welcome, Dear ' + socket.name,
@@ -62,6 +68,10 @@ io.on('connection', function (socket) {
         })
     })
 
+    socket.on('online users', function () {
+        socket.emit('online users', ONLINE_USERS)
+    })
+
     socket.on('new message', function (msg, cb) {
         cb && cb()
         msg.from = 'others'
@@ -69,14 +79,16 @@ io.on('connection', function (socket) {
         socket.broadcast.emit('new message', msg)
     })
 
-    socket.on('disconnected', function () {
+    socket.on('disconnect', function () {
         socket.broadcast.emit('system message', {
             uuid: uuid.v4(),
             msg: socket.name + ' out..',
             dateTime: new Date().toDateString()
         })
-    })
 
+        delete ONLINE_USERS[socket.id]
+        socket.broadcast.emit('online users', ONLINE_USERS)
+    })
 })
 
 server.listen(5000, function () {

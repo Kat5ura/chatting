@@ -23,8 +23,7 @@
     export default{
         data () {
             return {
-                messages: [],
-                sender: 'Sender'
+                messages: []
             }
         },
 
@@ -35,6 +34,11 @@
 
         created () {
             var vm = this
+
+            window.onclose = function () {
+                socket.disconnect()
+            }
+
             socket.on('new message', function (msg) {
                 msg.status = 'OK'
                 console.log('received : ' + msg)
