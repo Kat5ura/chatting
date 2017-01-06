@@ -1,7 +1,9 @@
 <template>
     <div class="message">
         <div class="message-content" :class="[data.from ? 'from-' + data.from : '']">
-            <div class="message-sender" v-if="data.from !== 'system'">{{data.from === 'myself' ? 'Me' : data.sender}}</div>
+            <div class="message-sender" v-if="data.from !== 'system'">{{data.from === 'myself' ? 'Me' :
+                data.userName}}
+            </div>
             <div v-if="data.from === 'system'" class="message-system">{{data.msg}}</div>
             <div class="message-body" v-else>
                 {{data.msg}}

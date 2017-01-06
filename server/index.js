@@ -75,8 +75,18 @@ io.on('connection', function (socket) {
     socket.on('new message', function (msg, cb) {
         cb && cb()
         msg.from = 'others'
-        msg.sender = socket.name
-        socket.broadcast.emit('new message', msg)
+        msg.sender = socket.id
+        msg.userName = socket.name
+        switch (msg.type) {
+            case 'solo':
+                socket.broadcast.to(msg.target).emit('new message', msg)
+                break;
+            case 'room':
+            case 'lobby':
+            default:
+                socket.broadcast.emit('new message', msg)
+                break;
+        }
     })
 
     socket.on('disconnect', function () {

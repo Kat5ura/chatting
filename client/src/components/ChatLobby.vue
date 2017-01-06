@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <ChatApp/>
+        <Chat/>
     </div>
 </template>
 <style>
@@ -19,11 +19,11 @@
     }
 </style>
 <script>
-    import ChatApp from './ChatApp.vue'
+    import Chat from './Chat.vue'
 
     export default{
         components: {
-            ChatApp
+            Chat
         }
     }
 

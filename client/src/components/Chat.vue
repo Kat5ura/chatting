@@ -41,6 +41,7 @@
 
             socket.on('new message', function (msg) {
                 msg.status = 'OK'
+                msg.target = msg.sender
                 console.log('received : ' + msg)
                 vm.messages.unshift(msg)
             })
@@ -58,12 +59,15 @@
                 msg.status = 'Sending...'
                 msg.from = 'myself'
                 vm.messages.unshift(msg)
-                socket.emit('new message', msg, function () {
-                    vm.messages.forEach(function (item) {
-                        if (item.uuid === msg.uuid) {
-                            item.status = 'OK'
-                        }
-                    })
+                this.$emit('send-message', {
+                    data: msg,
+                    cb: function () {
+                        vm.messages.forEach(function (item) {
+                            if (item.uuid === msg.uuid) {
+                                item.status = 'OK'
+                            }
+                        })
+                    }
                 })
             }
         }
