@@ -101,16 +101,20 @@
                 vm.myId = socket.id
             })
 
+            socket.on('custom_chat', function (roomId) {
+                vm.$router.push({
+                    name: 'chat',
+                    params: {
+                        chatId: roomId
+                    }
+                })
+            })
+
         },
 
         methods: {
             chatWith (key) {
-                this.$router.push({
-                    name: 'chat',
-                    params: {
-                        userId: key
-                    }
-                })
+                socket.emit('custom_chat', key)
             }
         }
     }

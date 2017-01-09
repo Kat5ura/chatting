@@ -40,8 +40,8 @@
             }
 
             socket.on('new message', function (msg) {
+                msg.from = 'others'
                 msg.status = 'OK'
-                msg.target = msg.sender
                 console.log('received : ' + msg)
                 vm.messages.unshift(msg)
             })

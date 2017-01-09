@@ -27,7 +27,7 @@
     export default{
         data () {
             return {
-                chatWith: ''
+                chatId: ''
             }
         },
         components: {
@@ -35,7 +35,7 @@
         },
 
         created () {
-            this.chatWith = this.$route.params.userId
+            this.chatId = this.$route.params.chatId
         },
 
         methods: {
@@ -44,7 +44,7 @@
                     cb = message.cb
 
                 msg.type = 'solo'
-                msg.target = this.chatWith
+                msg.chatId = this.chatId
 
                 socket.emit('new message', msg, function () {
                     cb();

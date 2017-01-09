@@ -20,7 +20,7 @@ const routes = [
         component: ChatRoom
     },
     {
-        path: '/chat/:userId',
+        path: '/chat/:chatId',
         name: 'chat',
         component: ChatSolo
     }
