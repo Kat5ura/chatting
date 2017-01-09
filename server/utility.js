@@ -14,9 +14,13 @@ var utility = {
             }
         }
 
+        var roomId = uuid.v4()
+
+        global.CHATROOMS[userStr] = roomId
+
         return {
-            room: uuid.v4(),
-            users: userList.sort().toString()
+            room: roomId,
+            users: userStr
         }
     },
 

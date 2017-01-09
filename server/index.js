@@ -75,7 +75,6 @@ io.on('connection', function (socket) {
         var couple = [to, socket.id],
             room = utility.generateRoom(couple),
             roomId = room.room;
-        CHATROOMS[room.users] = roomId
         socket.join(roomId)
         socket.emit('custom_chat', roomId)
     })
